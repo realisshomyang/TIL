@@ -4,7 +4,7 @@ import hello.hellospring.domain.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-@Repository
+
 public class MemoryMemberRepsitory implements MemberRepsitory{
 
     private static Map<Long,Member> store = new HashMap<>(); //협업에서는 동시성 문제등으로 해서 콘커런트 해쉬맵 사용

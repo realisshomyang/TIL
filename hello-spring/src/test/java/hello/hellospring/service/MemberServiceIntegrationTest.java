@@ -1,46 +1,32 @@
 package hello.hellospring.service;
 
 import hello.hellospring.domain.Member;
+import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+@SpringBootTest
+@Transactional
+class MemberServiceIntegrationTest {
+    @Autowired MemberService memberService;
+    @Autowired MemberRepository memberRepository;
 
-class MemberServiceTest {
-    MemberService memberService;
-    MemoryMemberRepository memberRepository;
-    //MemoryMemberRepsitory repository = new MemoryMemberRepsitory();
-    //-> static이니까 그냥 써도 되는데, 다른 인스턴스인 경우 이 코드는 잘못 될 수 있음
-    //이걸 해결하려면 생성자를 만들어준다., 멤버 서비스 입장에서 외부에서 생성한 객체를 넣어준다.
-    //이를 dependency injection이라고 한다.
-    @BeforeEach
-    public void beforeEach(){
-        memberRepository = new MemoryMemberRepository();
-        memberService = new MemberService(memberRepository);
-    }
-    @AfterEach
-    public void afterEach(){
-        memberRepository.clearStore();
-    }
-    //할 때마다 클리어 해줘야한다.
-
-    //한글로 이름 적어도됨 test는
     /*
-    test는
-    given
-    when
-    then
-    으로 구성하는ㄱ 좋다.
+    test는 그냥 injection 넣어줘도된다.
      */
     @Test
     void 회원가입() {
         //given
         Member member = new Member();
-        member.setName("hello");
+        member.setName("cho");
 
         //when
         Long saveId = memberService.join(member);
